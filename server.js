@@ -1,8 +1,29 @@
 const express = require('express');
+const cors = require("cors");
 const app = express();
 require('dotenv').config();
 const dbConfig = require('./config/dbConfig');
+
+const allowedOrigins = [
+  "http://localhost:5173",          // frontend dev
+  "https://movie-review-rating-express.onrender.com/" // production frontend
+];
+
+app.use(
+  cors({
+    origin: function(origin, callback) {
+      // allow requests with no origin (like Postman or mobile apps)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        return callback(new Error("CORS policy does not allow this origin."), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, // allow cookies or auth headers
+  })
+);
 app.use(express.json());
+
 
 const usersRoute = require('./routes/usersRoute');
 const artistsRoute = require('./routes/artistsRoute');
