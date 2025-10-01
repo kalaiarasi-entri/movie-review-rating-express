@@ -6,7 +6,7 @@ const dbConfig = require('./config/dbConfig');
 
 const allowedOrigins = [
   "http://localhost:5173",          // frontend dev
-  "https://movie-review-rating-react.netlify.app/" // production frontend
+  "https://movie-review-rating-react.netlify.app" // production frontend
 ];
 
 app.use(
